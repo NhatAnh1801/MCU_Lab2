@@ -93,11 +93,11 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim2);
 	setTimer1(50);
 	setTimer2(50);
-	enum SEG_State{
-		  SEG1,SEG2
-	  };
-	//initialize
-	enum SEG_State current = SEG1;
+//	enum SEG_State{
+//		  SEG1,SEG2
+//	  };
+//	//initialize
+//	enum SEG_State current = SEG1;
   /* USER CODE END 2 */
 
   /* Infinite loop */
