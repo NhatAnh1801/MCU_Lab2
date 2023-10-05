@@ -93,11 +93,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim2);
 	setTimer1(50);
 	setTimer2(50);
-//	enum SEG_State{
-//		  SEG1,SEG2
-//	  };
-//	//initialize
-//	enum SEG_State current = SEG1;
+	int status = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -107,20 +103,28 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	if(timer1_flag == 1){
-		setTimer1(50);
-		//TODO
-		HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 0);
-		HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
-		display7SEG(1);
-	}
-	if(timer2_flag == 1){
-			setTimer2(50);
-			//TODO
-			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
-			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 0);
-			display7SEG(2);
-	}
+	  switch(status){
+	  case 0:
+		  if(timer1_flag == 1){
+			  setTimer1(50);
+			  //TODO
+			  display7SEG(1);
+			  HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin,0);
+			  HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin,1);
+			  status = 1;
+		  }
+		  break;
+	  case 1:
+		  if(timer1_flag == 1){
+			  setTimer1(50);
+			  //TODO
+			  display7SEG(2);
+			  HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin,1);
+			  HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin,0);
+			  status = 0;
+		  }
+		  break;
+	  }
 
 
   }
