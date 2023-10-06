@@ -52,7 +52,6 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -93,7 +92,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim2);
 	setTimer1(100);
 	setTimer2(100);
-	int status = 0;
+	int hour = 23 , minute = 59 , second = 55;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -103,61 +102,30 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  if(timer2_flag == 1){
-		  setTimer2(100);
-		  HAL_GPIO_TogglePin(DOT_GPIO_Port,DOT_Pin);
-	  }
-	  switch(status){
-	  case 0:
-		  if(timer1_flag == 1){
-			  setTimer1(50);
-			  //TODO
-			  display7SEG(1);
-			  HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin,0);
-			  HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin,1);
-			  HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin,1);
-			  HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin,1);
-			  status = 1;
-		  }
-		  break;
-	  case 1:
-		  if(timer1_flag == 1){
-			  setTimer1(50);
-			  //TODO
-			  display7SEG(2);
-			  HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin,1);
-			  HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin,0);
-			  HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin,1);
-			  HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin,1);
-			  status = 2;
-		  }
-
-		  break;
-	  case 2:
-		  if(timer1_flag == 1){
-			  setTimer1(50);
-			  //TODO
-			  display7SEG(3);
-			  HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin,1);
-			  HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin,1);
-			  HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin,0);
-			  HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin,1);
-			  status = 3;
-		  }
-		  break;
-	  case 3:
-		  if(timer1_flag == 1){
-			  setTimer1(50);
-			  //TODO
-			  display7SEG(0);
-			  HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin,1);
-			  HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin,1);
-			  HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin,1);
-			  HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin,0);
-			  status = 0;
-		  }
-		  break;
-	  }
+	if(timer1_flag == 1){
+		setTimer1(100);
+		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+		//TODO
+		second++;
+		if(second >= 60){
+			second = 0;
+			minute++;
+		if(minute >=60){
+			minute =0;
+			hour++;
+			}
+		if(hour >= 24){
+			hour =0;
+			}
+		}
+	}
+	updateClockBuffer(hour,minute);
+	//UPDATE7SEG Function
+	if(timer2_flag == 1){
+		setTimer2(50);
+		//TODO
+		update7SEG(index_led++);
+	}
 
 
   }
