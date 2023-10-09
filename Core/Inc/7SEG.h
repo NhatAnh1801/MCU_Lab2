@@ -11,6 +11,6 @@
 int index_led;
 void display7SEG(int num);
 void update7SEG(int index);
-void updateClockBuffer(hour,minute);
+void updateClockBuffer(int hour,int minute);
 
 #endif /* INC_7SEG_H_ */

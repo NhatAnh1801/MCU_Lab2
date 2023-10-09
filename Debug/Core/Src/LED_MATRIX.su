@@ -1,0 +1,4 @@
+LED_MATRIX.c:20:6:displayLEDMATRIX	24	static
+LED_MATRIX.c:34:6:updateLEDMatrix	24	static
+LED_MATRIX.c:45:6:LEDMatrix_Run	8	static
+LED_MATRIX.c:49:6:shiftLeftMatrix	16	static
