@@ -8,7 +8,7 @@
 #include "LED_MATRIX.h"
 #include "main.h"
 
-GPIO_TypeDef* LED_MATRIX_GPIO_Port = GPIOB;
+//GPIO_TypeDef* LED_MATRIX_GPIO_Port = GPIOB;
 GPIO_TypeDef* LED_MATRIX_A_GPIO_Port = GPIOA;
 uint16_t COL_Pin[] = {GPIO_PIN_2,GPIO_PIN_3,GPIO_PIN_10, GPIO_PIN_11, GPIO_PIN_12, GPIO_PIN_13, GPIO_PIN_14, GPIO_PIN_15};
 uint16_t ROW_Pin[] = {GPIO_PIN_8, GPIO_PIN_9, GPIO_PIN_10, GPIO_PIN_11, GPIO_PIN_12, GPIO_PIN_13, GPIO_PIN_14, GPIO_PIN_15};
@@ -34,10 +34,10 @@ void displayLEDMATRIX (int index){
 void updateLEDMatrix(int index){
 	for(int i = 0;i < MAX_LED_MATRIX;i++){
 		if(i == index){
-			HAL_GPIO_WritePin(LED_MATRIX_GPIO_Port,ROW_Pin[i],0);
+			HAL_GPIO_WritePin(GPIOB,ROW_Pin[i],0);
 		}
 		else{
-			HAL_GPIO_WritePin(LED_MATRIX_GPIO_Port,ROW_Pin[i],1);
+			HAL_GPIO_WritePin(GPIOB,ROW_Pin[i],1);
 		}
 	}
 	displayLEDMATRIX(index);

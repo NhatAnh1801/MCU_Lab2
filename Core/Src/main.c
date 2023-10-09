@@ -93,7 +93,8 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim2);
 	setTimer1(30);
 	setTimer2(100);
-	int counter = 0;
+	setTimer3(7);
+	int hour = 23 , minute = 59 , second = 55;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,16 +105,37 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  if(timer1_flag == 1){
-		  setTimer1(20);
+		  setTimer1(50);
 		  //TODO
 		  LEDMatrix_Run();
-
+		  update7SEG(index_led++);
 	  }
 	  if(timer2_flag == 1){
-		  setTimer2(100);
+		  setTimer2(200);
 		  //TODO
 		 shiftLeftMatrix();
+
 	  }
+	  if(timer3_flag == 1){
+		  setTimer3(100);
+			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+			HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
+			//TODO
+			second++;
+			if(second >= 60){
+				second = 0;
+				minute++;
+			if(minute >=60){
+				minute =0;
+				hour++;
+				}
+			if(hour >= 24){
+				hour =0;
+				}
+			}
+
+	  }
+	  updateClockBuffer(hour,minute);
 
   }
   /* USER CODE END 3 */
